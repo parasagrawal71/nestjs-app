@@ -21,5 +21,8 @@ export class UsersService {
     });
 
     return this.repo.save(user);
+
+    // return this.repo.save({ email, password });
+    // NOTE: This also works but the upper one is recommended for validation at entity level and hooks such as AfterInsert are not executed in this case
   }
 }
