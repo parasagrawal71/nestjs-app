@@ -43,40 +43,55 @@ export class UsersController {
   // }
 
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     // this.usersService.create(body.email, body.password);
-    return this.authService.signup(body.email, body.password);
-  }
-
-  // @UseInterceptors(ClassSerializerInterceptor) // STEP 2_2: It converts the user instance into plain object
-  // @UseInterceptors(new SerializeInterceptor(UserDto)) // NOTE: Custom serializer
-  // @Serialize(UserDto) // NOTE: Custom serializer with custom decorator
-  @Get('/:id')
-  async findUser(@Param('id') id: string) {
-    const user = await this.usersService.findOne(parseInt(id));
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    const user = await this.authService.signup(body.email, body.password);
+    session.userId = user.id;
     return user;
   }
 
-  @Get()
-  findAllUsers(@Query('email') email: string) {
-    return this.usersService.find(email);
-  }
+  // // @UseInterceptors(ClassSerializerInterceptor) // STEP 2_2: It converts the user instance into plain object
+  // // @UseInterceptors(new SerializeInterceptor(UserDto)) // NOTE: Custom serializer
+  // // @Serialize(UserDto) // NOTE: Custom serializer with custom decorator
+  // @Get('/:id')
+  // async findUser(@Param('id') id: string) {
+  //   const user = await this.usersService.findOne(parseInt(id));
+  //   if (!user) {
+  //     throw new NotFoundException('User not found');
+  //   }
+  //   return user;
+  // }
 
-  @Delete('/:id')
-  removeUser(@Param('id') id: string) {
-    return this.usersService.remove(parseInt(id));
-  }
+  // @Get()
+  // findAllUsers(@Query('email') email: string) {
+  //   return this.usersService.find(email);
+  // }
 
-  @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
-    return this.usersService.update(parseInt(id), body);
-  }
+  // @Delete('/:id')
+  // removeUser(@Param('id') id: string) {
+  //   return this.usersService.remove(parseInt(id));
+  // }
+
+  // @Patch('/:id')
+  // updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+  //   return this.usersService.update(parseInt(id), body);
+  // }
 
   @Post('/signin')
-  signin(@Body() body: CreateUserDto) {
-    return this.authService.signin(body.email, body.password);
+  async signin(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signin(body.email, body.password);
+    session.userId = user.id;
+    return user;
+  }
+
+  @Get('/whoami')
+  whoAmI(@Session() session: any) {
+    // console.log('🚀 ~ UsersController ~ whoAmI ~ session:', session);
+    return this.usersService.findOne(session.userId);
+  }
+
+  @Post('/signout')
+  async signout(@Session() session: any) {
+    session.userId = null;
   }
 }
