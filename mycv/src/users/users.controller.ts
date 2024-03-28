@@ -21,9 +21,13 @@ import {
 } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
+import { User } from './user.entity';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 
-@Serialize(UserDto)
 @Controller('auth')
+@Serialize(UserDto)
+@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -84,10 +88,15 @@ export class UsersController {
     return user;
   }
 
+  // @Get('/whoami')
+  // whoAmI(@Session() session: any) {
+  //   // console.log('🚀 ~ UsersController ~ whoAmI ~ session:', session);
+  //   return this.usersService.findOne(session.userId);
+  // }
   @Get('/whoami')
-  whoAmI(@Session() session: any) {
-    // console.log('🚀 ~ UsersController ~ whoAmI ~ session:', session);
-    return this.usersService.findOne(session.userId);
+  whoAmI(@CurrentUser() user: User) {
+    // console.log('🚀 ~ UsersController ~ whoAmI ~ user:', user);
+    return user;
   }
 
   @Post('/signout')
