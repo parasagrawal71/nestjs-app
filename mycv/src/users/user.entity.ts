@@ -19,7 +19,7 @@ export class User {
   email: string;
 
   @Column()
-  @Exclude() // STEP 2_1: To exclude password from response object
+  // @Exclude() // STEP 2_1: To exclude password from response object
   password: string;
 
   // @AfterInsert()
