@@ -19,15 +19,20 @@ import {
   SerializeInterceptor,
 } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
+import { AuthService } from './auth.service';
 
 @Serialize(UserDto)
 @Controller('auth')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    this.usersService.create(body.email, body.password);
+    // this.usersService.create(body.email, body.password);
+    return this.authService.signup(body.email, body.password);
   }
 
   // @UseInterceptors(ClassSerializerInterceptor) // STEP 2_2: It converts the user instance into plain object
