@@ -1,8 +1,12 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  NestInterceptor,
+  UseInterceptors,
+} from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserDto } from 'src/users/dtos/user.dto';
 
 export class SerializeInterceptor implements NestInterceptor {
   constructor(private dto: any) {}
@@ -25,4 +29,8 @@ export class SerializeInterceptor implements NestInterceptor {
       }),
     );
   }
+}
+
+export function Serialize(dto: any) {
+  return UseInterceptors(new SerializeInterceptor(dto));
 }
