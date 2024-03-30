@@ -9,12 +9,30 @@ describe('AuthService', () => {
   let fakeUsersService: Partial<UsersService>;
 
   beforeEach(async () => {
-    // Create a fake copy of the users service
+    // // Create a fake copy of the users service
+    // fakeUsersService = {
+    //   // NOTE: 'Partial<UsersService>'
+    //   find: () => Promise.resolve([]),
+    //   create: (email: string, password: string) =>
+    //     Promise.resolve({ id: 1, email, password } as User), // NOTE: 'as User'
+    // };
+
+    // IMPORTANT: More Intelligent mocks
+    const users: User[] = [];
     fakeUsersService = {
-      // NOTE: 'Partial<UsersService>'
-      find: () => Promise.resolve([]),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password } as User), // NOTE: 'as User'
+      find: (email: string) => {
+        const filteredUsers = users.filter((user) => user.email === email);
+        return Promise.resolve(filteredUsers);
+      },
+      create: (email: string, password: string) => {
+        const user = {
+          id: Math.floor(Math.random() * 999999),
+          email,
+          password,
+        } as User;
+        users.push(user);
+        return Promise.resolve(user);
+      },
     };
 
     const module = await Test.createTestingModule({
@@ -84,15 +102,18 @@ describe('AuthService', () => {
   });
 
   it('Successful signin', async () => {
-    fakeUsersService.find = () =>
-      Promise.resolve([
-        {
-          id: 1,
-          email: 'test@gmail.com',
-          password:
-            '289d57a83c35c6af.dd44a575fd88f4586bba3a20a5688bb7c0ea455a5314f99272e57115123dfeb2',
-        } as User,
-      ]);
+    // fakeUsersService.find = () =>
+    //   Promise.resolve([
+    //     {
+    //       id: 1,
+    //       email: 'test@gmail.com',
+    //       password:
+    //         '289d57a83c35c6af.dd44a575fd88f4586bba3a20a5688bb7c0ea455a5314f99272e57115123dfeb2',
+    //     } as User,
+    //   ]);
+
+    // IMPORTANT: More Intelligent mocks
+    await service.signup('test@gmail.com', 'secure-password');
 
     const user = await service.signin('test@gmail.com', 'secure-password');
     expect(user).toBeDefined();
