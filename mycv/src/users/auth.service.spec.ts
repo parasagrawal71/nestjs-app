@@ -112,7 +112,7 @@ describe('AuthService', () => {
     //     } as User,
     //   ]);
 
-    // IMPORTANT: More Intelligent mocks
+    // IMPORTANT: In case of 'More Intelligent mocks'
     await service.signup('test@gmail.com', 'secure-password');
 
     const user = await service.signin('test@gmail.com', 'secure-password');
