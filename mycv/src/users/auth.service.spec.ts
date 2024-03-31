@@ -1,4 +1,4 @@
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
@@ -35,7 +35,7 @@ describe('AuthService', () => {
       },
     };
 
-    const module = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         {

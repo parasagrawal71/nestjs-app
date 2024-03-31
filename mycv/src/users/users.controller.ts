@@ -19,13 +19,13 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import {
   Serialize,
   SerializeInterceptor,
-} from 'src/interceptors/serialize.interceptor';
+} from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { User } from './user.entity';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -69,10 +69,10 @@ export class UsersController {
   //   return user;
   // }
 
-  // @Get()
-  // findAllUsers(@Query('email') email: string) {
-  //   return this.usersService.find(email);
-  // }
+  @Get()
+  findAllUsers(@Query('email') email: string) {
+    return this.usersService.find(email);
+  }
 
   // @Delete('/:id')
   // removeUser(@Param('id') id: string) {
