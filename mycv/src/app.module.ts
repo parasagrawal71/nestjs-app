@@ -14,6 +14,8 @@ const cookieSession = require('cookie-session');
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
+      // database:
+      //   process.env.NODE_ENV === 'test' ? 'test-db.sqlite' : 'db.sqlite',
       entities: [User, Report], // STEP 1_3: Link the entity to the app module
       synchronize: true, // IMPORTANT: Only for development environment. Automatically syncs SQL tables(for example, creates/deletes columns) based on entity files.
     }),
