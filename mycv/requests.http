@@ -1,0 +1,47 @@
+# 'REST Client' VSCode Extension
+
+### Signup
+POST https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/auth/signup
+content-type: application/json
+
+{
+    "email": "paras@gmail.com",
+    "password": "secure-password"
+}
+
+
+### Signin
+POST https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/auth/signin
+content-type: application/json
+
+{
+    "email": "paras@gmail.com",
+    "password": "secure-password"
+}
+
+
+### WhoAmI
+GET https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/auth/whoami
+
+
+### Signout
+POST https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/auth/signout
+
+
+### Create a report
+POST https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports
+content-type: application/json
+
+{
+      "price": 50000,
+      "make": "toyota",
+      "model": "corolla",
+      "year": 1980,
+      "mileage": 200,
+      "lng": 0,
+      "lat": 0
+}
+
+
+### Get reports
+GET https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports
