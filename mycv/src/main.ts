@@ -16,6 +16,6 @@ async function bootstrap() {
   //     keys: ['asadasdewwecfsd'], // NOTE: Random string to encrypt cookies
   //   }),
   // );
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
