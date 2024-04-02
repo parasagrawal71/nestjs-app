@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDTO } from './dtos/create-report.dto';
 import { AuthGuard } from '../guards/auth.guard';
@@ -18,9 +26,15 @@ export class ReportsController {
     return this.reportsService.create(body, user);
   }
 
-  @Get()
+  @Get('/list')
   @UseGuards(AuthGuard)
   getReports() {
     return this.reportsService.get();
+  }
+
+  @Patch('/:id')
+  @UseGuards(AuthGuard)
+  approveReport(@Param('id') id: string) {
+    return this.reportsService.changeApproval(parseInt(id), true);
   }
 }

@@ -43,5 +43,9 @@ content-type: application/json
 }
 
 
-### Get reports
-GET https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports
+### Get reports list
+GET https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports/list
+
+
+### Approve a report
+PATCH https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports/1
