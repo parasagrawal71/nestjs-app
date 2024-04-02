@@ -51,11 +51,13 @@ const cookieSession = require('cookie-session');
   ],
 })
 export class AppModule {
+  constructor(private configService: ConfigService) {}
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
         cookieSession({
-          keys: ['asadasdewwecfsd'], // NOTE: Random string to encrypt cookies
+          keys: [this.configService.get('COOKIE_KEY')], // NOTE: Random string to encrypt cookies
         }),
       )
       .forRoutes('*'); // NOTE: `forRoutes('*')` means that it is a global middleware
