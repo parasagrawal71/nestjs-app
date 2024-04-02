@@ -49,3 +49,8 @@ GET https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports/list
 
 ### Approve a report
 PATCH https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports/2
+
+
+### Get estimate
+GET https://fuzzy-fishstick-6v57xxgvpj4f5gj9-3000.app.github.dev/reports?make=toyota&model=corolla&year=1980&mileage=200&lat=0&lng=0
+
