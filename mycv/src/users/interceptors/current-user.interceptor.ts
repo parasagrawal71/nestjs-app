@@ -7,6 +7,12 @@ import {
 import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
 
+/**
+ * IMPORTANT
+ * Order of execution among following:
+ * Middleware -> Guard -> Interceptor(Before) -> Request Handler -> Interceptor(After) -> Response
+ * So, converting current-user interceptor into a middleware for AdminGuard
+ */
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
   constructor(private usersService: UsersService) {}
